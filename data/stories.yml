@@ -229,7 +229,7 @@ stories:
 - story: story of Card_Activation
   steps:
   - intent: Card_Activation
-  - action: action_Card_Activation
+  # - action: action_Card_Activation
   - action: get_parents_name_form
   - active_loop: get_parents_name_form
   - slot_was_set:
@@ -251,7 +251,7 @@ stories:
 - story: story of E_Commerce_Request
   steps:
   - intent: E_Commerce_Request
-  - action: action_E_Commerce_Request
+  # - action: action_E_Commerce_Request
   - action: get_parents_name_form
   - active_loop: get_parents_name_form
   - slot_was_set:
@@ -273,7 +273,7 @@ stories:
 - story: story of Card_Close
   steps:
   - intent: Card_Close
-  - action: action_Card_Close
+  # - action: action_Card_Close
   - action: card_bill_form_c_number
   - active_loop: card_bill_form_c_number
   - slot_was_set:
