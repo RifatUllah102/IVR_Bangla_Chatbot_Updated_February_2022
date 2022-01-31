@@ -1,0 +1,212 @@
+[
+  {
+    "text": "1000",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "1000",
+        "entity": "amount-of-money"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "PIN",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.6526789665222168,
+        "value": "1000",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "5000",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "5000",
+        "entity": "amount-of-money"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "PIN",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.6526789665222168,
+        "value": "5000",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "3000",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "3000",
+        "entity": "amount-of-money"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "PIN",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.6526789665222168,
+        "value": "3000",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "2500",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "2500",
+        "entity": "amount-of-money"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "PIN",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.6526789665222168,
+        "value": "2500",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "3500",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "3500",
+        "entity": "amount-of-money"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "PIN",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.6526789665222168,
+        "value": "3500",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "7500",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "7500",
+        "entity": "amount-of-money"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "PIN",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.6526789665222168,
+        "value": "7500",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "1500",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "1500",
+        "entity": "amount-of-money"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "PIN",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.6526789665222168,
+        "value": "1500",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "2000",
+    "entities": [
+      {
+        "start": 0,
+        "end": 4,
+        "value": "2000",
+        "entity": "amount-of-money"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "PIN",
+        "start": 0,
+        "end": 4,
+        "confidence_entity": 0.6526789665222168,
+        "value": "2000",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "আমি 3500 টাকা বিল দিতে চায়",
+    "entities": [
+      {
+        "start": 4,
+        "end": 8,
+        "value": "3500",
+        "entity": "amount-of-money"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "PIN",
+        "start": 4,
+        "end": 8,
+        "confidence_entity": 0.5609683990478516,
+        "value": "3500",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "৳ 5000",
+    "entities": [
+      {
+        "start": 2,
+        "end": 6,
+        "value": "5000",
+        "entity": "amount-of-money"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "PIN",
+        "start": 2,
+        "end": 6,
+        "confidence_entity": 0.6526789665222168,
+        "value": "5000",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  }
+]
