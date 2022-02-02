@@ -1022,25 +1022,25 @@ class OutOfScope(Action):
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_2")
             elif "তোমার প্রেমে" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_3")
-            elif (("বিবাহিত" or "বিবাহিত নাকি অবিবাহিত" or "বিয়ে" or "অবিবাহিত" or "আনমেরিড") in Input):
+            elif "বিবাহিত" in Input or "বিয়ে" in Input or "অবিবাহিত" in Input or "আনমেরিড" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_4")
             elif "দিনটা কেমন" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_5")
             elif "কি বুদ্ধিমান" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_6")
-            elif (("প্রিয় পিকআপ লাইন" or "পিকআপ লাইন") in Input):
+            elif "প্রিয় পিকআপ লাইন" in Input or "পিকআপ লাইন" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_7")
-            elif (("কখনো প্রেমে পরেছ" or "প্রেমে পরেছ") in Input):
+            elif "কখনো প্রেমে পরেছ" in Input or "প্রেমে পরেছ" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_8")
-            elif (("জন্মদিন" or "বার্থডে") in Input):
+            elif "আজকে জন্মদিন" in Input or "জন্মদিন" in Input or "বার্থডে" in Input or "জন্মদিন আজকে" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_9")
-            elif (("এলিয়েন" or "এলিয়েন কি সত্যি" or "মহাজাগতিক প্রানী") in Input):
+            elif "এলিয়েন" in Input or "এলিয়েন কি সত্যি" in Input or "মহাজাগতিক প্রানী" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_10")
-            elif (("সিরি" or "সিরি কে") in Input):
+            elif "সিরি" in Input or "সিরি কে" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_Siri")
-            elif (("করটানা" or "কর্টানা" or "করটানা কে") in Input):
+            elif "করটানা" in Input or "কর্টানা" in Input or "করটানা কে" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_Cortana")
-            elif (("আলেক্সা" or "এলেক্সা কে" or "আলেক্সা কে" or "এলেক্সা") in Input):
+            elif "আলেক্সা" in Input or "এলেক্সা কে" in Input or "আলেক্সা কে" in Input or "এলেক্সা" in Input:
                 dispatcher.utter_message(response="utter_Out_of_scope_funny_Alexa")
             else:
                 dispatcher.utter_message(response="utter_out_of_scope")
@@ -1294,7 +1294,7 @@ class ActionCard_Activation(Action):
     ) -> List[Dict]:
         print(tracker.latest_message['intent'].get('name'))
         """Executes the action"""
-        dispatcher.utter_message(response="utter_card_activation")
+        # dispatcher.utter_message(response="utter_card_activation")
         return[
             SlotSet("Father_Name", None),
             SlotSet("Mother_Name", None),
@@ -1315,7 +1315,7 @@ class E_Commerce_Request(Action):
     ) -> List[Dict]:
         print(tracker.latest_message['intent'].get('name'))
         """Executes the action"""
-        dispatcher.utter_message(response="utter_E_Commerce_Request")
+        # dispatcher.utter_message(response="utter_E_Commerce_Request")
         return[
             SlotSet("Father_Name", None),
             SlotSet("Mother_Name", None),
@@ -1337,7 +1337,7 @@ class ActionCard_Close(Action):
     ) -> List[Dict]:
         print(tracker.latest_message['intent'].get('name'))
         """Executes the action"""
-        dispatcher.utter_message(response="utter_Card_Close")
+        # dispatcher.utter_message(response="utter_Card_Close")
         return[
             SlotSet("card_number", None),
             SlotSet("Father_Name", None),

@@ -2,6 +2,13 @@ version: "2.0"
 
 rules:
 
+- rule: Say no_story_1
+  steps:
+  - or:
+    - intent: EMI_Query
+    - intent: campaign
+  - action: utter_no_story
+
 - rule: Say goodbye anytime the user says goodbye
   steps:
   - intent: goodbye
