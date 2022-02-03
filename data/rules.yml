@@ -9,6 +9,11 @@ rules:
     - intent: campaign
   - action: utter_no_story
 
+- rule: BankingQuery rule
+  steps:
+  - intent: BankingQuery
+  - action: utter_AT
+
 - rule: Say goodbye anytime the user says goodbye
   steps:
   - intent: goodbye

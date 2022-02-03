@@ -1071,9 +1071,9 @@ class CreditCardLimitInformation(Action):
         print(type(UserText))
         if "লিমিট" in UserText:
             dispatcher.utter_message(response="utter_card_limit")
-        elif ("কার্ড ব্যালেন্স" or "ব্যালেন্স") in UserText:
+        elif "কার্ড ব্যালেন্স" in UserText or "ব্যালেন্স" in UserText or "এভেইলেবল এমাউন্ট" in UserText:
             dispatcher.utter_message(response="utter_card_balance")
-        elif ("আউটস্টেন্ডং" or "খরচ") in UserText:
+        elif "আউটস্টেন্ডং" in UserText or "খরচ" in UserText or "ডিউ" in UserText or "বিল" in UserText:
             dispatcher.utter_message(response="utter_card_outstanding")
         else:
             dispatcher.utter_message(response="utter_card_info")
@@ -1473,10 +1473,10 @@ class ActionGreet(Action):
         if 3<= currentTime.hour < 12:
            print('Good morning.')
            dispatcher.utter_message(response="utter_greet_morning")
-        elif 12 <= currentTime.hour < 16:
+        elif 12 <= currentTime.hour < 17:
             print('Good afternoon.')
             dispatcher.utter_message(response="utter_greet_afternoon")
-        elif 16 <= currentTime.hour < 19:
+        elif 17 <= currentTime.hour < 19:
             print('Good evening.')
             dispatcher.utter_message(response="utter_greet_evening")
         elif 19 <= currentTime.hour < 3:
