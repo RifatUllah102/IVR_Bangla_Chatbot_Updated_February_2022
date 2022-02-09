@@ -433,9 +433,12 @@ class ResetPINandACnumer(Action):
         print(tracker.latest_message['intent'].get('name'))
         """Executes the action"""
         print("Reset AC number and PIN Function Called.")
+        # return[
+        #         SlotSet("PIN", None),
+        #         SlotSet("account_number", None),
+        #     ]
         return[
                 SlotSet("PIN", None),
-                SlotSet("account_number", None),
             ]
 
 class AffirmOrDenyACNumber(Action):
@@ -524,7 +527,8 @@ class ActionTellACnumber(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        tell_ACNumber = next(tracker.get_latest_entity_values("account_number"), None)
+        # tell_ACNumber = next(tracker.get_latest_entity_values("account_number"), None)
+        tell_ACNumber = tracker.get_slot("account_number")
         
         number=['জিরো','ওয়ান','টু','থ্রি','ফোর','ফাইভ','সিক্স','সেভেন','এইট','নাইন']
         if(tell_ACNumber!=None):
