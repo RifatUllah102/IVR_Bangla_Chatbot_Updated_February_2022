@@ -1,128 +1,9 @@
 {
-  "Card_Close": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 8,
-    "confused_with": {}
-  },
-  "out_of_scope": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 62,
-    "confused_with": {}
-  },
-  "stop_cheque": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 11,
-    "confused_with": {}
-  },
-  "goodbye": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 13,
-    "confused_with": {}
-  },
-  "Card_Activation": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 5,
-    "confused_with": {}
-  },
-  "Name_meaning": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 9,
-    "confused_with": {}
-  },
-  "Demo_Number": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 7,
-    "confused_with": {}
-  },
-  "deny": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 16,
-    "confused_with": {}
-  },
-  "thankyou": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 8,
-    "confused_with": {}
-  },
   "Exchange_rate": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
     "support": 7,
-    "confused_with": {}
-  },
-  "Credit_Card_Limit": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 19,
-    "confused_with": {}
-  },
-  "EMI_Query": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 9,
-    "confused_with": {}
-  },
-  "inform": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 134,
-    "confused_with": {}
-  },
-  "check_human": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 14,
-    "confused_with": {}
-  },
-  "Bank_and_ATM_Location": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 9,
-    "confused_with": {}
-  },
-  "E_Commerce_Request": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 4,
-    "confused_with": {}
-  },
-  "greet": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 17,
-    "confused_with": {}
-  },
-  "weather": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 6,
     "confused_with": {}
   },
   "Ask_Time": {
@@ -139,11 +20,25 @@
     "support": 18,
     "confused_with": {}
   },
-  "agent_transfer": {
+  "Demo_Number": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 15,
+    "support": 7,
+    "confused_with": {}
+  },
+  "BankingQuery": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 10,
+    "confused_with": {}
+  },
+  "greet": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 17,
     "confused_with": {}
   },
   "affirm": {
@@ -153,18 +48,18 @@
     "support": 21,
     "confused_with": {}
   },
-  "campaign": {
+  "Name_meaning": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 7,
+    "support": 9,
     "confused_with": {}
   },
-  "check_balance": {
+  "Bank_and_ATM_Location": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 10,
+    "support": 9,
     "confused_with": {}
   },
   "bKash_transfer": {
@@ -174,17 +69,129 @@
     "support": 7,
     "confused_with": {}
   },
+  "stop_cheque": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 11,
+    "confused_with": {}
+  },
+  "Card_Close": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 12,
+    "confused_with": {}
+  },
+  "check_balance": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 10,
+    "confused_with": {}
+  },
+  "inform": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 134,
+    "confused_with": {}
+  },
+  "out_of_scope": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 63,
+    "confused_with": {}
+  },
+  "goodbye": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 13,
+    "confused_with": {}
+  },
+  "agent_transfer": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 15,
+    "confused_with": {}
+  },
+  "E_Commerce_Request": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 4,
+    "confused_with": {}
+  },
+  "campaign": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 7,
+    "confused_with": {}
+  },
+  "weather": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 6,
+    "confused_with": {}
+  },
+  "thankyou": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 9,
+    "confused_with": {}
+  },
+  "Credit_Card_Limit": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 23,
+    "confused_with": {}
+  },
+  "EMI_Query": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 9,
+    "confused_with": {}
+  },
+  "deny": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 16,
+    "confused_with": {}
+  },
+  "Card_Activation": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 8,
+    "confused_with": {}
+  },
+  "check_human": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 14,
+    "confused_with": {}
+  },
   "accuracy": 1.0,
   "macro avg": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 447
+    "support": 470
   },
   "weighted avg": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 447
+    "support": 470
   }
 }

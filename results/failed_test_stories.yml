@@ -4,28 +4,35 @@ stories:
   steps:
   - intent: greet
   - action: utter_greet  # predicted: action_greet
-  - intent: mood_unhappy  # predicted: nlu_fallback: not good
-  - action: utter_cheer_up  # predicted: action_default_fallback
+  - action: action_listen  # predicted: action_default_fallback
+  - intent: mood_unhappy  # predicted: deny: not good
+  - action: utter_cheer_up  # predicted: utter_weather
   - action: utter_did_that_help  # predicted: action_listen
+  - action: action_listen  # predicted: action_default_fallback
   - intent: affirm
   - action: utter_happy  # predicted: action_default_fallback
+  - action: action_listen  # predicted: action_default_fallback
 - story: sad path 2 (./tests/test_stories.yml)
   steps:
   - intent: greet
   - action: utter_greet  # predicted: action_greet
-  - intent: mood_unhappy  # predicted: nlu_fallback: not good
-  - action: utter_cheer_up  # predicted: action_default_fallback
+  - action: action_listen  # predicted: action_default_fallback
+  - intent: mood_unhappy  # predicted: deny: not good
+  - action: utter_cheer_up  # predicted: utter_weather
   - action: utter_did_that_help  # predicted: action_listen
-  - intent: deny  # predicted: nlu_fallback: not really
+  - action: action_listen  # predicted: action_default_fallback
+  - intent: deny
   - action: utter_goodbye  # predicted: action_default_fallback
   - action: action_listen  # predicted: action_default_fallback
 - story: sad path 3 (./tests/test_stories.yml)
   steps:
   - intent: greet
   - action: utter_greet  # predicted: action_greet
-  - intent: mood_unhappy  # predicted: Demo_Number: very terrible
-  - action: utter_cheer_up  # predicted: action_default_fallback
+  - action: action_listen  # predicted: action_default_fallback
+  - intent: mood_unhappy  # predicted: nlu_fallback: very terrible
+  - action: utter_cheer_up  # predicted: utter_weather
   - action: utter_did_that_help  # predicted: action_listen
+  - action: action_listen  # predicted: action_default_fallback
   - intent: deny
   - action: utter_goodbye  # predicted: action_default_fallback
   - action: action_listen  # predicted: action_default_fallback
@@ -41,13 +48,15 @@ stories:
   steps:
   - intent: greet
   - action: utter_greet  # predicted: action_greet
+  - action: action_listen  # predicted: action_default_fallback
   - intent: mood_great  # predicted: nlu_fallback: amazing
-  - action: utter_happy  # predicted: action_default_fallback
+  - action: utter_happy  # predicted: utter_weather
 - story: happy path 2 (./env/lib/python3.7/site-packages/rasa/cli/initial_project/tests/test_stories.yml)
   steps:
   - intent: greet
   - action: utter_greet  # predicted: action_greet
+  - action: action_listen  # predicted: action_default_fallback
   - intent: mood_great  # predicted: nlu_fallback: amazing
-  - action: utter_happy  # predicted: action_default_fallback
+  - action: utter_happy  # predicted: utter_weather
   - intent: goodbye  # predicted: affirm: bye-bye!
   - action: utter_goodbye

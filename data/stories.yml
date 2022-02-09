@@ -159,7 +159,7 @@ stories:
   - slot_was_set:
     - requested_slot: card_number
   - slot_was_set:
-    - card_number: '1234567489322845'
+    - card_number: '1234567489'
   - slot_was_set:
     - requested_slot: null
   - active_loop: null

@@ -311,7 +311,7 @@ class ActionCardnumberCard(FormValidationAction):
                     return {"card_number": None}
                 else:
                     print("Correct card Number")
-                    account = db_manager.set_slot_value(tracker.sender_id, "card_number", card)
+                    # account = db_manager.set_slot_value(tracker.sender_id, "card_number", card)
                     return {"card_number": card}
         else:
             if len(card)!=10 or card == None:
@@ -319,7 +319,7 @@ class ActionCardnumberCard(FormValidationAction):
                 return {"card_number": None}
             else:
                 print("Correct card Number")
-                account = db_manager.set_slot_value(tracker.sender_id, "card_number", card)
+                # account = db_manager.set_slot_value(tracker.sender_id, "card_number", card)
                 return {"card_number": card}
 
 
@@ -360,7 +360,7 @@ class ActionValidateAMOUNT(FormValidationAction):
                     return {"amount-of-money": None}
                 else:
                     # print("2")
-                    account = db_manager.set_slot_value(tracker.sender_id, 'amount-of-money', amount)
+                    # account = db_manager.set_slot_value(tracker.sender_id, 'amount-of-money', amount)
                     return {"amount-of-money": amount}
             else:
                 # print("3")
@@ -373,7 +373,7 @@ class ActionValidateAMOUNT(FormValidationAction):
                 dispatcher.utter_message(response="utter_invalidAMOUNT")
                 return {"amount-of-money": None}
             else:
-                account = db_manager.set_slot_value(tracker.sender_id, 'amount-of-money', amount)
+                # account = db_manager.set_slot_value(tracker.sender_id, 'amount-of-money', amount)
                 print("Amount is ", amount)
                 return {"amount-of-money": amount}
 
@@ -515,8 +515,11 @@ class ActionACnumber(FormValidationAction):
                 return {"account_number": None}
             else:
                 print("Correct account Number")
-                account = db_manager.set_slot_value(tracker.sender_id, "account_number", ac)
+                # if tracker.get_slot('account_number') in domain['slots']['account_number']['value']:
+                #     return [SlotSet("account_number", ac), FollowupAction('action_tell_ACNumber'), SlotSet("account_check","False")]
+                # account = db_manager.set_slot_value(tracker.sender_id, "account_number", ac)
                 # return {"account_number": ac}
+    
                 return [SlotSet("account_number", ac), FollowupAction('action_tell_ACNumber')]
 
 class ActionTellACnumber(Action):
@@ -529,7 +532,9 @@ class ActionTellACnumber(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         # tell_ACNumber = next(tracker.get_latest_entity_values("account_number"), None)
         tell_ACNumber = tracker.get_slot("account_number")
-        
+        check = True
+        if tracker.get_slot("account_check")=="False":
+            check = False
         number=['জিরো','ওয়ান','টু','থ্রি','ফোর','ফাইভ','সিক্স','সেভেন','এইট','নাইন']
         if(tell_ACNumber!=None):
             wr=''
@@ -544,11 +549,18 @@ class ActionTellACnumber(Action):
             msg = f"দুঃখিত, আপনার কথাটি বুঝতে পারিনি ।"
             dispatcher.utter_message(text=msg)
             return []
-
+        
         msg = f"আপনি বলেছেন, {wr} । সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
+        else_msg = f"{wr} কি আপনার একাউন্ট নাম্বার। ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
         print('আপনি বলেছেন,', {wr}, '। সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।')
-        dispatcher.utter_message(text=msg)
-        return []
+        print(check)
+        print(type(check))
+        if check:
+            dispatcher.utter_message(text=msg)
+            return [SlotSet("account_check","False")]
+        else:
+            dispatcher.utter_message(text=else_msg)
+            return []
 
 class AffirmOrDenyPIN(Action):
     """action_check_PIN"""
@@ -613,7 +625,7 @@ class ActionAccountCnumber(FormValidationAction):
                     return {"PIN": None}
                 else:
                     print("Correct pin Number")
-                    account = db_manager.set_slot_value(tracker.sender_id, "PIN", pin)
+                    # account = db_manager.set_slot_value(tracker.sender_id, "PIN", pin)
                     return {"PIN": pin}
         else:
             if len(pin)!=4 or pin == None:
@@ -621,7 +633,7 @@ class ActionAccountCnumber(FormValidationAction):
                 return {"PIN": None}
             else:
                 print("Correct pin Number")
-                account = db_manager.set_slot_value(tracker.sender_id, "PIN", pin)
+                # account = db_manager.set_slot_value(tracker.sender_id, "PIN", pin)
                 return {"PIN": pin}
 
 class ActionShowBalance(Action):
@@ -670,7 +682,7 @@ class ActionShowBalance(Action):
                     )
         else:
             # show bank account balance
-            account_balance = profile_db.get_account_balance(tracker.sender_id)
+            # account_balance = profile_db.get_account_balance(tracker.sender_id)
             account_balance=106000
             account_balance=str(int(account_balance))
             amount = tracker.get_slot("amount_transferred")
@@ -752,9 +764,13 @@ class ResetBkashTransectionVALUES(Action):
         print(tracker.latest_message['intent']['confidence'])
         """Executes the action"""
         print("Reset bKash related info.")
+        # return[
+        #         SlotSet("phone_number", None),
+        #         SlotSet("account_number", None),
+        #         SlotSet("amount-of-money", None),
+        #     ]
         return[
                 SlotSet("phone_number", None),
-                SlotSet("account_number", None),
                 SlotSet("amount-of-money", None),
             ]
 class ActionValidatePhoneNumber(FormValidationAction):
@@ -792,7 +808,7 @@ class ActionValidatePhoneNumber(FormValidationAction):
                     return {"phone_number": None}
                 else:
                     print("Correct phone Number")
-                    account = db_manager.set_slot_value(tracker.sender_id, "phone_number", phone)
+                    # account = db_manager.set_slot_value(tracker.sender_id, "phone_number", phone)
                     return {"phone_number": phone}
         else:
             if len(phone)!=11 or phone == None:
@@ -800,7 +816,7 @@ class ActionValidatePhoneNumber(FormValidationAction):
                 return {"phone_number": None}
             else:
                 print("Correct phone Number")
-                account = db_manager.set_slot_value(tracker.sender_id, "phone_number", phone)
+                # account = db_manager.set_slot_value(tracker.sender_id, "phone_number", phone)
                 return {"phone_number": phone}
 
 class ActionTellphone(Action):
@@ -1194,7 +1210,7 @@ class ActionChequeNumber(FormValidationAction):
                     return {"cheque_number": None}
                 else:
                     print("Correct cheque Number")
-                    account = db_manager.set_slot_value(tracker.sender_id, "cheque_number", cheque)
+                    # account = db_manager.set_slot_value(tracker.sender_id, "cheque_number", cheque)
                     return [SlotSet("cheque_number", cheque), FollowupAction('action_tell_ChequeNumber')]
         else:
             if len(cheque)!=6 or cheque == None:
@@ -1202,7 +1218,7 @@ class ActionChequeNumber(FormValidationAction):
                 return {"cheque_number": None}
             else:
                 print("Correct cheque Number")
-                account = db_manager.set_slot_value(tracker.sender_id, "cheque_number", cheque)
+                # account = db_manager.set_slot_value(tracker.sender_id, "cheque_number", cheque)
                 return [SlotSet("cheque_number", cheque), FollowupAction('action_tell_ChequeNumber')]
 
 class ActionTellChequeNumber(Action):

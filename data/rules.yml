@@ -9,7 +9,7 @@ rules:
     - intent: campaign
   - action: utter_no_story
 
-- rule: BankingQuery rule
+- rule: BankingQuery response
   steps:
   - intent: BankingQuery
   - action: utter_AT

@@ -1,114 +1,26 @@
 [
   {
-    "text": "সিরি কে চিন",
-    "intent": "out_of_scope",
+    "text": "একাউন্টে ডিপোজিট হয়েছে কিন্তু আমার একাউন্টে টাকা এখনও হিট করেনি।",
+    "intent": "BankingQuery",
     "intent_prediction": {
-      "name": "check_human",
-      "confidence": 0.9786628484725952
+      "name": "check_balance",
+      "confidence": 0.9581078290939331
     }
   },
   {
-    "text": "সিরি কে চেন",
-    "intent": "out_of_scope",
+    "text": "একাউন্টে ডিপোজিট হয়েছে কিন্তু আমার একাউন্টে টাকা এখনও জমা হয়নি।",
+    "intent": "BankingQuery",
     "intent_prediction": {
-      "name": "greet",
-      "confidence": 0.3436095118522644
+      "name": "check_balance",
+      "confidence": 0.9796234965324402
     }
   },
   {
-    "text": "সিরি কে",
-    "intent": "out_of_scope",
+    "text": "একাউন্টে টাকা এখনও জমা হয়নি।",
+    "intent": "BankingQuery",
     "intent_prediction": {
-      "name": "affirm",
-      "confidence": 0.28986477851867676
-    }
-  },
-  {
-    "text": "করটানা কে",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "explain",
-      "confidence": 0.5635742545127869
-    }
-  },
-  {
-    "text": "করটানা কে চিন",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "check_human",
-      "confidence": 0.9131736755371094
-    }
-  },
-  {
-    "text": "করটানা কে চেন",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "explain",
-      "confidence": 0.26352593302726746
-    }
-  },
-  {
-    "text": "কর্টানা কে",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "thankyou",
-      "confidence": 0.4964786171913147
-    }
-  },
-  {
-    "text": "কর্টানা কে চিন",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "check_human",
-      "confidence": 0.8766061663627625
-    }
-  },
-  {
-    "text": "কর্টানা কে চেন",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "explain",
-      "confidence": 0.2420387715101242
-    }
-  },
-  {
-    "text": "আলেক্সা কে",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "affirm",
-      "confidence": 0.3290541470050812
-    }
-  },
-  {
-    "text": "এলেক্সা কে",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "check_human",
-      "confidence": 0.4378325045108795
-    }
-  },
-  {
-    "text": "এলেক্সা কে চিন",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "check_human",
-      "confidence": 0.9768096804618835
-    }
-  },
-  {
-    "text": "আলেক্সা কে চিন",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "check_human",
-      "confidence": 0.977838933467865
-    }
-  },
-  {
-    "text": "আলেক্সা কে চেন",
-    "intent": "out_of_scope",
-    "intent_prediction": {
-      "name": "agent_transfer",
-      "confidence": 0.25221213698387146
+      "name": "check_balance",
+      "confidence": 0.9926592707633972
     }
   }
 ]

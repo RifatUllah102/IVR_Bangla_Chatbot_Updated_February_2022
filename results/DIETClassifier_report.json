@@ -1,4 +1,11 @@
 {
+  "Father_Name": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 15,
+    "confused_with": {}
+  },
   "PIN": {
     "precision": 0.7142857142857143,
     "recall": 1.0,
@@ -6,18 +13,11 @@
     "support": 25,
     "confused_with": {}
   },
-  "Birth_Date": {
+  "Mother_Name": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 9,
-    "confused_with": {}
-  },
-  "phone_number": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 19,
+    "support": 11,
     "confused_with": {}
   },
   "amount-of-money": {
@@ -29,6 +29,13 @@
       "PIN": 10
     }
   },
+  "Birth_Date": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 9,
+    "confused_with": {}
+  },
   "cheque_number": {
     "precision": 1.0,
     "recall": 1.0,
@@ -36,18 +43,11 @@
     "support": 14,
     "confused_with": {}
   },
-  "Mother_Name": {
+  "phone_number": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 11,
-    "confused_with": {}
-  },
-  "account_number": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1-score": 1.0,
-    "support": 16,
+    "support": 19,
     "confused_with": {}
   },
   "card_number": {
@@ -57,11 +57,11 @@
     "support": 13,
     "confused_with": {}
   },
-  "Father_Name": {
+  "account_number": {
     "precision": 1.0,
     "recall": 1.0,
     "f1-score": 1.0,
-    "support": 15,
+    "support": 16,
     "confused_with": {}
   },
   "micro avg": {
