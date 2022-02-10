@@ -551,7 +551,8 @@ class ActionTellACnumber(Action):
             return []
         
         msg = f"আপনি বলেছেন, {wr} । সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
-        else_msg = f"{wr} কি আপনার একাউন্ট নাম্বার। ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
+        wr_r=wr.split(',') # reverse text for last 3 digit
+        else_msg = f"লাস্ট ডিজিট {wr_r[-4:-1]} কি আপনার একাউন্ট নাম্বার। ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
         print('আপনি বলেছেন,', {wr}, '। সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।')
         print(check)
         print(type(check))
