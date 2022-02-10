@@ -970,9 +970,12 @@ class ResetPINandCARDnumer(Action):
         print(f"User Input: {UserText}")
         """Executes the action"""
         print("Reset AC number and PIN Function Called.")
+        # return[
+        #         SlotSet("PIN", None),
+        #         SlotSet("card_number", None),
+        #     ]
         return[
                 SlotSet("PIN", None),
-                SlotSet("card_number", None),
             ]
 class ActionTellCardNumber(Action):
 
@@ -985,7 +988,10 @@ class ActionTellCardNumber(Action):
             
         print(tracker.latest_message['intent'].get('name'))
         print(tracker.latest_message['intent']['confidence'])
-        tell_card = next(tracker.get_latest_entity_values("card_number"), None)
+        tell_card = tracker.get_slot("card_number")
+        C_check = True
+        if tracker.get_slot("card_check")=="False":
+            C_check = False
         number=['জিরো','ওয়ান','টু','থ্রি','ফোর','ফাইভ','সিক্স','সেভেন','এইট','নাইন']
         if(tell_card!=None):
             wr=''
@@ -1003,9 +1009,16 @@ class ActionTellCardNumber(Action):
             return []
 
         msg = f"আপনি বলেছেন, {wr} । সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
+        wr_r=wr.split(',') # reverse text for last 3 digit
+        else_msg = f"লাস্ট ডিজিট {wr_r[-5:-1]} কি আপনার কার্ড নাম্বার। ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
         print('আপনি বলেছেন,', {wr}, '। সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।')
-        dispatcher.utter_message(text=msg)
-        return []
+        
+        if C_check:
+            dispatcher.utter_message(text=msg)
+            return [SlotSet("card_check","False")]
+        else:
+            dispatcher.utter_message(text=else_msg)
+            return []
 
 counter=0
 class OutOfScope(Action):

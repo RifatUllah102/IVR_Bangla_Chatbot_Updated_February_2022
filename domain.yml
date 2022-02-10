@@ -33,6 +33,7 @@ intents:
 - Bank_and_ATM_Location
 - BankingQuery
 entities:
+- card_check
 - account_check
 - CCV
 - PIN
@@ -86,6 +87,10 @@ slots:
     max_value: 100000.0
     min_value: 0.0
   account_check:
+    type: any
+    initial_value: True
+    influence_conversation: false
+  card_check:
     type: any
     initial_value: True
     influence_conversation: false
