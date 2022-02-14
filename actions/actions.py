@@ -552,7 +552,7 @@ class ActionTellACnumber(Action):
         
         msg = f"আপনি বলেছেন, {wr} । সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
         wr_r=wr.split(',') # reverse text for last 3 digit
-        else_msg = f"লাস্ট ডিজিট {','.join(wr_r[-4:-1])} কি আপনার একাউন্ট নাম্বার। ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
+        else_msg = f"লাস্ট ডিজিট {','.join(wr_r[-4:-1])}, কি আপনার একাউন্ট নাম্বার। ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
         print('আপনি বলেছেন,', {wr}, '। সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।')
         print(check)
         print(type(check))
@@ -900,27 +900,23 @@ class ActionTellamount(Action):
         print(tracker.latest_message['intent']['confidence'])
         tell_amount = next(tracker.get_latest_entity_values("amount-of-money"), None)
 
-        bangla_numeric_string = bangla.convert_english_digit_to_bangla_digit(tell_amount)
-        print(bangla_numeric_string)
-        print(type(bangla_numeric_string))
-        print('bangla_numeric_string: ', len(str(bangla_numeric_string)))
-        if(len(str(bangla_numeric_string))>8):
-            account=bangla_numeric_string
-        else:
-            account = num_convert.number_to_bangla_words(bangla_numeric_string)
-        # number=['জিরো','ওয়ান','টু','থ্রি','ফোর','ফাইভ','সিক্স','সেভেন','এইট','নাইন']
-        # if(tell_amount!=None):
-        #     wr=''
-        #     for c in tell_amount:
-        #         wr=wr+' '+number[int(c)]
+        if tell_amount != None:
+            bangla_numeric_string = bangla.convert_english_digit_to_bangla_digit(tell_amount)
+            print(bangla_numeric_string)
+            print(type(bangla_numeric_string))
+            print('bangla_numeric_string: ', len(str(bangla_numeric_string)))
+            if(len(str(bangla_numeric_string))>8):
+                amount=bangla_numeric_string
+            else:
+                amount = num_convert.number_to_bangla_words(bangla_numeric_string)
 
         if not tell_amount:
             msg = f"দুঃখিত, আপনার কথাটি বুঝতে পারিনি ।"
             dispatcher.utter_message(text=msg)
             return []
 
-        msg = f"আপনি বলেছেন, {account} টাকা। সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
-        print('আপনি বলেছেন,', {account}, 'টাকা। সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।')
+        msg = f"আপনি বলেছেন, {amount} টাকা। সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
+        print('আপনি বলেছেন,', {amount}, 'টাকা। সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।')
         dispatcher.utter_message(text=msg)
         return []
 
@@ -1010,7 +1006,7 @@ class ActionTellCardNumber(Action):
 
         msg = f"আপনি বলেছেন, {wr} । সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
         wr_r=wr.split(',') # reverse text for last 3 digit
-        else_msg = f"লাস্ট ডিজিট {','.join(wr_r[-5:-1])} কি আপনার কার্ড নাম্বার। ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
+        else_msg = f"লাস্ট ডিজিট {','.join(wr_r[-5:-1])}, কি আপনার কার্ড নাম্বার। ঠিক হলে বলুন, হ্যা ঠিক আছে ।"
         print('আপনি বলেছেন,', {wr}, '। সেটা ঠিক হলে বলুন, হ্যা ঠিক আছে ।')
         
         if C_check:
