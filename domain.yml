@@ -33,7 +33,6 @@ intents:
 - Bank_and_ATM_Location
 - BankingQuery
 entities:
-- card_check
 - account_check
 - CCV
 - PIN
@@ -47,6 +46,9 @@ entities:
 - Mother_Name
 - Birth_Date
 slots:
+  next_form_name:
+    type: text
+    influence_conversation: true
   Father_Name:
     type: text
     influence_conversation: false
@@ -87,10 +89,6 @@ slots:
     max_value: 100000.0
     min_value: 0.0
   account_check:
-    type: any
-    initial_value: True
-    influence_conversation: false
-  card_check:
     type: any
     initial_value: True
     influence_conversation: false
@@ -318,6 +316,8 @@ responses:
   utter_no_story:
   - text: দুঃখিত। আমি এই রিলেটেড কথা বলতে পারছি না, কারণ আমার কাছে এর কোন স্টোরি নেই।
 actions:
+- action_switch_forms_deny
+- action_switch_forms_ask
 - action_reset_all_slots
 - Action_Card_limit_info
 - Action_Current_DateTime

@@ -86,6 +86,87 @@ stories:
 #   - action: action_reset_card_bill_form
 #   - action: utter_ask_whatelse
 
+# - story: other_intent while account Number
+#   steps:
+#   - active_loop: check_Balance_ACnum_form
+#   - intent: weather
+#   - action: utter_ask_continue_form
+#   - or:
+#     - intent: affirm
+#     - intent: deny
+#   - action: action_Other_Utter
+
+# - story: check balance ask to continue in the middle of AC_Number form
+#   steps:
+#   - intent: check_balance
+#   - action: action_reset_PINandACnumer
+#   - action: check_Balance_ACnum_form
+#   - active_loop: check_Balance_ACnum_form
+#   - slot_was_set:
+#     - requested_slot: account_number
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+#   - action: action_tell_ACNumber
+#   - or:
+#     - intent: affirm
+#     - intent: deny
+#     - intent: weather
+#   - action: action_check_AC_Number
+#   - or:
+#     - intent: affirm
+#     - intent: deny
+#   - action: action_Other_Utter
+
+# - story: ac number + switch to other intent, deny
+#   steps:
+#   - intent: check_balance
+#   - action: action_reset_PINandACnumer
+#   - action: check_Balance_ACnum_form
+#   - active_loop: check_Balance_ACnum_form
+#   - or:
+#     - intent: weather
+#     - intent: affirm
+#   - action: utter_ask_continue_form
+#   - intent: deny
+#   - action: action_Other_Utter
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+
+# - story: ac number + switch to other intent, affirm
+#   steps:
+#   - intent: check_balance
+#   - action: action_reset_PINandACnumer
+#   - action: check_Balance_ACnum_form
+#   - active_loop: check_Balance_ACnum_form
+#   - or:
+#     - intent: weather
+#     - intent: affirm
+#   - action: utter_ask_continue_form
+#   - intent: affirm
+#   - action: action_Other_Utter
+#   - action: check_Balance_ACnum_form
+#   - active_loop: check_Balance_ACnum_form
+
+
+- story: check balance + switch to weather, deny
+  steps:
+  - intent: check_balance
+  - action: action_reset_PINandACnumer
+  - action: check_Balance_ACnum_form
+  - active_loop: check_Balance_ACnum_form
+  - intent: weather
+  - action: action_switch_forms_ask
+  - slot_was_set:
+    - next_form_name: another form
+  - intent: deny
+  - action: action_switch_forms_deny
+  - slot_was_set:
+    - next_form_name: null
+  - action: check_Balance_ACnum_form
+  - active_loop: check_Balance_ACnum_form
+  
 - story: check balance
   steps:
   - intent: check_balance

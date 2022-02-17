@@ -270,7 +270,7 @@ class AffirmOrDenyCardNumber(Action):
             print(tracker.slots["card_number"])
             print(tracker.latest_message['intent'].get('name'))
             # return [FollowupAction('card_bill_form_c_number')]
-            return [SlotSet("card_number", None), Form("card_bill_form_c_number")]
+            return [SlotSet("card_number", None), SlotSet("card_check", True), Form("card_bill_form_c_number")]
 
 class ActionCardnumberCard(FormValidationAction):
     """validate_card_bill_form_c_number"""
@@ -312,7 +312,7 @@ class ActionCardnumberCard(FormValidationAction):
                 else:
                     print("Correct card Number")
                     # account = db_manager.set_slot_value(tracker.sender_id, "card_number", card)
-                    return {"card_number": card}
+                    return [SlotSet("card_number", card), FollowupAction('action_tell_CardNumber')]
         else:
             if len(card)!=10 or card == None:
                 dispatcher.utter_message(response="utter_invalidCARDnumber")
@@ -320,7 +320,8 @@ class ActionCardnumberCard(FormValidationAction):
             else:
                 print("Correct card Number")
                 # account = db_manager.set_slot_value(tracker.sender_id, "card_number", card)
-                return {"card_number": card}
+                
+                return [SlotSet("card_number", card), FollowupAction('action_tell_CardNumber')]
 
 
 class ActionValidateAMOUNT(FormValidationAction):
@@ -375,7 +376,8 @@ class ActionValidateAMOUNT(FormValidationAction):
             else:
                 # account = db_manager.set_slot_value(tracker.sender_id, 'amount-of-money', amount)
                 print("Amount is ", amount)
-                return {"amount-of-money": amount}
+                return[SlotSet("amount-of-money", None), ActionExecuted("action_tell_Amount")]
+                # return[SlotSet("amount-of-money", None), FollowupAction('action_tell_Amount')]
 
 class ResetACNumber(Action):
     """action_reset_account_number"""
@@ -441,6 +443,33 @@ class ResetPINandACnumer(Action):
                 SlotSet("PIN", None),
             ]
 
+class OtherInformation(Action):
+    """action_Other_Utter"""
+
+    def name(self) -> Text:
+        """Unique identifier of the action"""
+        return "action_Other_Utter"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        print(tracker.latest_message['intent'].get('name'))
+        print(tracker.latest_message['intent']['confidence'])
+        """Executes the action"""
+        print("response check Function Called.")
+
+        if tracker.latest_message['intent'].get('name') == "affirm":
+            print("Got, Yes")
+            # return [FollowupAction('action_tell_ACNumber')]
+        elif tracker.latest_message['intent'].get('name') == "deny":
+            print(tracker.latest_message['intent'].get('name'))
+            dispatcher.utter_message(response="utter_ask_whatelse")
+            # return [FollowupAction('card_bill_form_c_number')]
+            return [Form(None), SlotSet("requested_slot", None)]
+
 class AffirmOrDenyACNumber(Action):
     """action_check_AC_Number"""
 
@@ -462,12 +491,16 @@ class AffirmOrDenyACNumber(Action):
         if tracker.latest_message['intent'].get('name') == "affirm":
             print("Got, Yes")
             print(tracker.latest_message['intent'].get('name'))
-        if tracker.latest_message['intent'].get('name') == "deny":
+        elif tracker.latest_message['intent'].get('name') == "deny":
             tracker.slots["account_number"] = None
             print(tracker.slots["account_number"])
             print(tracker.latest_message['intent'].get('name'))
             # return [FollowupAction('card_bill_form_c_number')]
-            return [SlotSet("account_number", None), Form("check_Balance_ACnum_form")]
+            return [SlotSet("account_number", None), SlotSet("account_check",True), Form("check_Balance_ACnum_form")]
+        if tracker.latest_message['intent'].get('name') == "weather":
+            dispatcher.utter_message(response = "utter_ask_continue_form")
+            # return [FollowupAction('action_tell_ACNumber')]
+        return []
 
 class ActionACnumber(FormValidationAction):
     """validate_check_Balance_ACnum_form"""
@@ -519,7 +552,7 @@ class ActionACnumber(FormValidationAction):
                 #     return [SlotSet("account_number", ac), FollowupAction('action_tell_ACNumber'), SlotSet("account_check","False")]
                 # account = db_manager.set_slot_value(tracker.sender_id, "account_number", ac)
                 # return {"account_number": ac}
-    
+                # ActionTellACnumber.run(self, dispatcher, tracker, domain)
                 return [SlotSet("account_number", ac), FollowupAction('action_tell_ACNumber')]
 
 class ActionTellACnumber(Action):
@@ -878,11 +911,11 @@ class AffirmOrDenyPhoneNumber(Action):
             print("Got, Yes")
             print(tracker.latest_message['intent'].get('name'))
         if tracker.latest_message['intent'].get('name') == "deny":
-            tracker.slots["phone_Number"] = None
-            print(tracker.slots["phone_Number"])
-            print(tracker.latest_message['intent'].get('name'))
+            # tracker.slots["phone_number"] = None
+            # print(tracker.slots["phone_number"])
+            # print(tracker.latest_message['intent'].get('name'))
             # return [FollowupAction('card_bill_form_c_number')]
-            return [SlotSet("phone_Number", None), Form("phone_number_form")]
+            return [SlotSet("phone_number", None), Form("phone_number_form")]
 
 class ActionTellamount(Action):
 
