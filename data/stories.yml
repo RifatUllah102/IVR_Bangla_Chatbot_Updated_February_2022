@@ -11,7 +11,7 @@ stories:
 - story: weather path
   steps:
   - intent: weather
-  - action: utter_weather
+  - action: action_weather
 
 - story: Thank You
   steps:
@@ -96,77 +96,92 @@ stories:
 #     - intent: deny
 #   - action: action_Other_Utter
 
-# - story: check balance ask to continue in the middle of AC_Number form
+# - story: dependent intents
 #   steps:
-#   - intent: check_balance
-#   - action: action_reset_PINandACnumer
-#   - action: check_Balance_ACnum_form
-#   - active_loop: check_Balance_ACnum_form
-#   - slot_was_set:
-#     - requested_slot: account_number
-#   - slot_was_set:
-#     - requested_slot: null
-#   - active_loop: null
-#   - action: action_tell_ACNumber
 #   - or:
-#     - intent: affirm
 #     - intent: deny
-#     - intent: weather
-#   - action: action_check_AC_Number
-#   - or:
 #     - intent: affirm
-#     - intent: deny
-#   - action: action_Other_Utter
-
-# - story: ac number + switch to other intent, deny
-#   steps:
-#   - intent: check_balance
-#   - action: action_reset_PINandACnumer
-#   - action: check_Balance_ACnum_form
-#   - active_loop: check_Balance_ACnum_form
-#   - or:
-#     - intent: weather
-#     - intent: affirm
-#   - action: utter_ask_continue_form
-#   - intent: deny
-#   - action: action_Other_Utter
+#     - intent: inform
 #   - slot_was_set:
-#     - requested_slot: null
-#   - active_loop: null
+#     - Incomplete_Story: "False"
+#   - action: Action_out_of_scope
 
-# - story: ac number + switch to other intent, affirm
-#   steps:
-#   - intent: check_balance
-#   - action: action_reset_PINandACnumer
-#   - action: check_Balance_ACnum_form
-#   - active_loop: check_Balance_ACnum_form
-#   - or:
-#     - intent: weather
-#     - intent: affirm
-#   - action: utter_ask_continue_form
-#   - intent: affirm
-#   - action: action_Other_Utter
-#   - action: check_Balance_ACnum_form
-#   - active_loop: check_Balance_ACnum_form
-
-
-- story: check balance + switch to weather, deny
+#check balance corner case handle
+- story: ac number + switch to other intent, affirm
   steps:
   - intent: check_balance
   - action: action_reset_PINandACnumer
   - action: check_Balance_ACnum_form
   - active_loop: check_Balance_ACnum_form
-  - intent: weather
-  - action: action_switch_forms_ask
-  - slot_was_set:
-    - next_form_name: another form
-  - intent: deny
-  - action: action_switch_forms_deny
-  - slot_was_set:
-    - next_form_name: null
+  - or:
+    - intent: weather
+    - intent: affirm
+  - action: utter_ask_continue_form
+  - intent: affirm
+  - action: action_Other_Utter
+
+- story: ac number + switch to other intent, deny
+  steps:
+  - intent: check_balance
+  - action: action_reset_PINandACnumer
   - action: check_Balance_ACnum_form
   - active_loop: check_Balance_ACnum_form
-  
+  - or:
+    - intent: weather
+    - intent: affirm
+  - action: utter_ask_continue_form
+  - intent: deny
+  - action: action_Other_Utter
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+
+- story: check balance ask to continue in the middle of AC_Number form
+  steps:
+  - intent: check_balance
+  - action: action_reset_PINandACnumer
+  - action: check_Balance_ACnum_form
+  - active_loop: check_Balance_ACnum_form
+  - slot_was_set:
+    - requested_slot: account_number
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_tell_ACNumber
+  - or:
+    - intent: affirm
+    - intent: deny
+    - intent: weather
+  - action: action_check_AC_Number
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: action_Other_Utter
+
+- story: ac number + switch to other intent multiple time, affirm
+  steps:
+  - intent: check_balance
+  - action: action_reset_PINandACnumer
+  - action: check_Balance_ACnum_form
+  - active_loop: check_Balance_ACnum_form
+  - or:
+    - intent: weather
+    - intent: affirm
+  - action: utter_ask_continue_form
+  - intent: affirm
+  - action: action_Other_Utter
+  - action: action_tell_ACNumber
+  - or:
+    - intent: affirm
+    - intent: deny
+    - intent: weather
+  - action: action_check_AC_Number
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: action_Other_Utter
+#----------------------------------
+
 - story: check balance
   steps:
   - intent: check_balance
@@ -265,6 +280,59 @@ stories:
   - action: action_check_PIN
   - action: Action_Card_limit_info
 
+#Bkash cornar case intent handle
+# - story: ac number + switch to other intent, affirm
+#   steps:
+#   - intent: bKash_transfer
+#   - action: action_reset_BkashTransectionVALUES
+#   - action: check_Balance_ACnum_form
+#   - active_loop: check_Balance_ACnum_form
+#   - or:
+#     - intent: weather
+#     - intent: affirm
+#   - action: utter_ask_continue_form
+#   - intent: affirm
+#   - action: action_Other_Utter
+
+# - story: ac number + switch to other intent, deny
+#   steps:
+#   - intent: bKash_transfer
+#   - action: action_reset_BkashTransectionVALUES
+#   - action: check_Balance_ACnum_form
+#   - active_loop: check_Balance_ACnum_form
+#   - or:
+#     - intent: weather
+#     - intent: affirm
+#   - action: utter_ask_continue_form
+#   - intent: deny
+#   - action: action_Other_Utter
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+
+# - story: bKash_transfer ask to continue in the middle of AC_Number form
+#   steps:
+#   - intent: bKash_transfer
+#   - action: action_reset_BkashTransectionVALUES
+#   - action: check_Balance_ACnum_form
+#   - active_loop: check_Balance_ACnum_form
+#   - slot_was_set:
+#     - requested_slot: account_number
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+#   - action: action_tell_ACNumber
+#   - or:
+#     - intent: affirm
+#     - intent: deny
+#     - intent: weather
+#   - action: action_check_AC_Number_Bkash
+#   - or:
+#     - intent: affirm
+#     - intent: deny
+#   - action: action_Other_Utter
+#-----------------------------------------
+
 - story: Bkash Transfer
   steps:
   - intent: bKash_transfer
@@ -339,7 +407,7 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: utter_card_activation
+  - action: action_card_activation
 
 - story: story of E_Commerce_Request
   steps:
@@ -361,7 +429,7 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: utter_ok
+  - action: action_OK
 
 - story: story of Card_Close
   steps:
@@ -395,4 +463,4 @@ stories:
   - slot_was_set:
     - requested_slot: null
   - active_loop: null
-  - action: utter_card_close_done
+  - action: action_card_close_done

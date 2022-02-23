@@ -197,6 +197,7 @@ class ResetCardNumber(Action):
         print("Reset Slot Function Called.")
         return[
                 SlotSet("card_number", None),
+                SlotSet("Incomplete_Story", True),
             ]
 
 class ActionCallCut(Action):
@@ -242,6 +243,7 @@ class ResetAmount(Action):
         print("Reset Slot Function Called.")
         return[
                 SlotSet("amount-of-money", None),
+                SlotSet("Incomplete_Story", True),
             ]
 class AffirmOrDenyCardNumber(Action):
     """action_check_response"""
@@ -308,20 +310,34 @@ class ActionCardnumberCard(FormValidationAction):
                 tracker.slots["card_number"] = card
                 if len(card)!=10 or card == None:
                     dispatcher.utter_message(response="utter_invalidCARDnumber")
-                    return {"card_number": None}
+                    return [
+                            SlotSet("card_nimber", None),
+                            SlotSet("Incomplete_Story", True),
+                            ]
                 else:
                     print("Correct card Number")
                     # account = db_manager.set_slot_value(tracker.sender_id, "card_number", card)
-                    return [SlotSet("card_number", card), FollowupAction('action_tell_CardNumber')]
+                    return [
+                            SlotSet("card_number", card),
+                            SlotSet("Incomplete_Story", True),
+                            FollowupAction('action_tell_CardNumber'),
+                            ]
         else:
             if len(card)!=10 or card == None:
                 dispatcher.utter_message(response="utter_invalidCARDnumber")
-                return {"card_number": None}
+                return [
+                        SlotSet("card_nimber", None),
+                        SlotSet("Incomplete_Story", True),
+                        ]
             else:
                 print("Correct card Number")
                 # account = db_manager.set_slot_value(tracker.sender_id, "card_number", card)
                 
-                return [SlotSet("card_number", card), FollowupAction('action_tell_CardNumber')]
+                return [
+                        SlotSet("card_number", card),
+                        SlotSet("Incomplete_Story", True),
+                        FollowupAction('action_tell_CardNumber'),
+                        ]
 
 
 class ActionValidateAMOUNT(FormValidationAction):
@@ -358,25 +374,40 @@ class ActionValidateAMOUNT(FormValidationAction):
                 if(int(amount)<=0):
                     dispatcher.utter_message(response="utter_invalidAMOUNT")
                     # print("1")
-                    return {"amount-of-money": None}
+                    return[
+                            SlotSet("amount-of-money", None),
+                            SlotSet("Incomplete_Story", True),
+                            ]
                 else:
                     # print("2")
                     # account = db_manager.set_slot_value(tracker.sender_id, 'amount-of-money', amount)
-                    return {"amount-of-money": amount}
+                    return[
+                            SlotSet("amount-of-money", None),
+                            SlotSet("Incomplete_Story", True),
+                            ]
             else:
                 # print("3")
                 return[ SlotSet("amount-of-money", None),
+                        SlotSet("Incomplete_Story", True),
                         ]
         else:
             # print("4")
             if(int(amount)<=0):
                 # print("5")
                 dispatcher.utter_message(response="utter_invalidAMOUNT")
-                return {"amount-of-money": None}
+                # return {"amount-of-money": None}
+                return[
+                        SlotSet("amount-of-money", None),
+                        SlotSet("Incomplete_Story", True),
+                        ]
             else:
                 # account = db_manager.set_slot_value(tracker.sender_id, 'amount-of-money', amount)
                 print("Amount is ", amount)
-                return[SlotSet("amount-of-money", None), ActionExecuted("action_tell_Amount")]
+                return[
+                        SlotSet("amount-of-money", None),
+                        SlotSet("Incomplete_Story", True),
+                        ActionExecuted("action_tell_Amount"),
+                        ]
                 # return[SlotSet("amount-of-money", None), FollowupAction('action_tell_Amount')]
 
 class ResetACNumber(Action):
@@ -398,6 +429,7 @@ class ResetACNumber(Action):
         print("Reset Slot Function Called.")
         return[
                 SlotSet("account_number", None),
+                SlotSet("Incomplete_Story", True),
             ]
 class ResetPIN(Action):
     """action_reset_PIN"""
@@ -417,6 +449,7 @@ class ResetPIN(Action):
         print("Reset Slot Function Called.")
         return[
                 SlotSet("PIN", None),
+                SlotSet("Incomplete_Story", True),
             ]
 
 class ResetPINandACnumer(Action):
@@ -441,7 +474,43 @@ class ResetPINandACnumer(Action):
         #     ]
         return[
                 SlotSet("PIN", None),
+                SlotSet("Incomplete_Story", True),
             ]
+
+class WeatherAction(Action):
+    """action_weather"""
+
+    def name(self) -> Text:
+        """Unique identifier of the action"""
+        return "action_weather"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        print(tracker.latest_message['intent'].get('name'))
+        print(tracker.latest_message['intent']['confidence'])
+
+        currentloop = tracker.active_loop.get('name')
+        print(f"Loop name: {currentloop}")
+
+        story_status = tracker.get_slot("Incomplete_Story")
+        print(f"Story Incomplete: {story_status}")
+
+        # if currentloop == None:
+        #     dispatcher.utter_message(response = "utter_weather_query")
+        #     return []
+        #     # return [FollowupAction('action_tell_ACNumber')]
+        if story_status != True:
+            dispatcher.utter_message(response = "utter_weather_query")
+            # return [Form(None), SlotSet("requested_slot", None)]
+            return []
+            
+        else:
+            # dispatcher.utter_message(response = "utter_ask_continue_form")
+            return [FollowupAction('action_check_AC_Number')]
 
 class OtherInformation(Action):
     """action_Other_Utter"""
@@ -449,6 +518,14 @@ class OtherInformation(Action):
     def name(self) -> Text:
         """Unique identifier of the action"""
         return "action_Other_Utter"
+    
+    # @staticmethod
+    # def start_story_events(story_intent):
+    #     # type: (Text) -> List[Dict]
+    #     return [ActionExecuted("action_listen")] + [UserUttered("/" + story_intent, {
+    #         "intent": {"name": story_intent, "confidence": 1.0},
+    #         "entities": {}
+    #     })]
 
     async def run(
         self,
@@ -463,12 +540,48 @@ class OtherInformation(Action):
 
         if tracker.latest_message['intent'].get('name') == "affirm":
             print("Got, Yes")
+            # return self.start_story_events("request.check_balance")
             # return [FollowupAction('action_tell_ACNumber')]
+            currentloop = tracker.active_loop.get('name')
+            if currentloop != None:
+                return [Form(currentloop)]
+            else:
+                return [Form("check_Balance_ACnum_form")]
         elif tracker.latest_message['intent'].get('name') == "deny":
             print(tracker.latest_message['intent'].get('name'))
             dispatcher.utter_message(response="utter_ask_whatelse")
             # return [FollowupAction('card_bill_form_c_number')]
-            return [Form(None), SlotSet("requested_slot", None)]
+            return [Form(None), SlotSet("requested_slot", None), SlotSet("Incomplete_Story", False)]
+        else:
+            pass
+        
+        return []
+
+class OtherInformationAC(Action):
+    """action_Other_Utter_AC_Num"""
+
+    def name(self) -> Text:
+        """Unique identifier of the action"""
+        return "action_Other_Utter_AC_Num"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        print(tracker.latest_message['intent'].get('name'))
+        print(tracker.latest_message['intent']['confidence'])
+        """Executes the action"""
+        print("response check Function Called.")
+
+        if tracker.latest_message['intent'].get('name') == "explain":
+            dispatcher.utter_message(response = "utter_explain_account_number")
+            # return [FollowupAction('action_tell_ACNumber')]
+        else:
+            dispatcher.utter_message(response = "utter_ask_continue_form")
+            # return [Form(None), SlotSet("requested_slot", None)]
+            return [ActionExecuted('action_listen')]
 
 class AffirmOrDenyACNumber(Action):
     """action_check_AC_Number"""
@@ -491,16 +604,57 @@ class AffirmOrDenyACNumber(Action):
         if tracker.latest_message['intent'].get('name') == "affirm":
             print("Got, Yes")
             print(tracker.latest_message['intent'].get('name'))
+            return[Form("check_Balance_PIN_form")]
+        elif tracker.latest_message['intent'].get('name') == "deny":
+            tracker.slots["account_number"] = None
+            print(tracker.slots["account_number"])
+            print(tracker.latest_message['intent'].get('name'))
+            # return [FollowupAction('card_bill_form_c_number')]
+            return [
+                    SlotSet("account_number", None),
+                    SlotSet("account_check",True),
+                    Form("check_Balance_ACnum_form"),
+                    ]
+        # if tracker.latest_message['intent'].get('name') == "weather":
+        else:
+            dispatcher.utter_message(response = "utter_ask_continue_form")
+            return[]
+            # return [FollowupAction('action_tell_ACNumber')]
+
+class AffirmOrDenyACNumberBkash(Action):
+    """action_check_AC_Number_Bkash"""
+
+    def name(self) -> Text:
+        """Unique identifier of the action"""
+        return "action_check_AC_Number_Bkash"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        print(tracker.latest_message['intent'].get('name'))
+        print(tracker.latest_message['intent']['confidence'])
+        """Executes the action"""
+        print("response check Function Called.")
+
+        if tracker.latest_message['intent'].get('name') == "affirm":
+            print("Got, Yes")
+            print(tracker.latest_message['intent'].get('name'))
+            return[Form("phone_number_form")]
         elif tracker.latest_message['intent'].get('name') == "deny":
             tracker.slots["account_number"] = None
             print(tracker.slots["account_number"])
             print(tracker.latest_message['intent'].get('name'))
             # return [FollowupAction('card_bill_form_c_number')]
             return [SlotSet("account_number", None), SlotSet("account_check",True), Form("check_Balance_ACnum_form")]
-        if tracker.latest_message['intent'].get('name') == "weather":
+        # if tracker.latest_message['intent'].get('name') == "weather":
+        else:
             dispatcher.utter_message(response = "utter_ask_continue_form")
+            return[]
             # return [FollowupAction('action_tell_ACNumber')]
-        return []
+
 
 class ActionACnumber(FormValidationAction):
     """validate_check_Balance_ACnum_form"""
@@ -536,16 +690,27 @@ class ActionACnumber(FormValidationAction):
                 tracker.slots["account_number"] = ac
                 if len(ac)!=8 or ac == None:
                     dispatcher.utter_message(response="utter_invalidACNumber")
-                    return {"account_number": None}
+                    return [SlotSet("account_number", None),
+                            SlotSet("Incomplete_Story", True),
+                            ]
+                    # return {"account_number": None}
                 else:
                     print("Correct account Number")
                     account = db_manager.set_slot_value(tracker.sender_id, "account_number", ac)
                     # return {"account_number": ac}
-                    return [SlotSet("account_number", ac), FollowupAction('action_tell_ACNumber')]
+                    return [
+                            SlotSet("account_number", ac),
+                            SlotSet("Incomplete_Story", True),
+                            FollowupAction('action_tell_ACNumber'),
+                            ]
         else:
             if len(ac)!=8 or ac == None:
                 dispatcher.utter_message(response="utter_invalidACNumber")
-                return {"account_number": None}
+                return [
+                        SlotSet("account_number", None),
+                        SlotSet("Incomplete_Story", True),
+                        ]
+                # return {"account_number": None}
             else:
                 print("Correct account Number")
                 # if tracker.get_slot('account_number') in domain['slots']['account_number']['value']:
@@ -553,7 +718,11 @@ class ActionACnumber(FormValidationAction):
                 # account = db_manager.set_slot_value(tracker.sender_id, "account_number", ac)
                 # return {"account_number": ac}
                 # ActionTellACnumber.run(self, dispatcher, tracker, domain)
-                return [SlotSet("account_number", ac), FollowupAction('action_tell_ACNumber')]
+                return [
+                        SlotSet("account_number", ac),
+                        SlotSet("Incomplete_Story", True),
+                        FollowupAction('action_tell_ACNumber'),
+                        ]
 
 class ActionTellACnumber(Action):
 
@@ -656,19 +825,34 @@ class ActionAccountCnumber(FormValidationAction):
                 tracker.slots["PIN"] = pin
                 if len(pin)!=4 or pin == None:
                     dispatcher.utter_message(response="utter_invalidPIN")
-                    return {"PIN": None}
+                    return [
+                            SlotSet("PIN", None),
+                            SlotSet("Incomplete_Story", True),
+                            ]
+                    # return {"PIN": None}
                 else:
                     print("Correct pin Number")
                     # account = db_manager.set_slot_value(tracker.sender_id, "PIN", pin)
-                    return {"PIN": pin}
+                    return [
+                            SlotSet("PIN", pin),
+                            SlotSet("Incomplete_Story", True),
+                            ]
         else:
             if len(pin)!=4 or pin == None:
                 dispatcher.utter_message(response="utter_invalidPIN")
-                return {"PIN": None}
+                return [
+                        SlotSet("PIN", None),
+                        SlotSet("Incomplete_Story", True),
+                        ]
+                # return {"PIN": None}
             else:
                 print("Correct pin Number")
                 # account = db_manager.set_slot_value(tracker.sender_id, "PIN", pin)
-                return {"PIN": pin}
+                return [
+                        SlotSet("PIN", pin),
+                        SlotSet("Incomplete_Story", True),
+                        ]
+                # return {"PIN": pin}
 
 class ActionShowBalance(Action):
     """Shows the balance of bank or credit card accounts"""
@@ -747,7 +931,11 @@ class ActionShowBalance(Action):
             #events.append(SlotSet("AA_CONTINUE_FORM", None))
             # avoid that bot goes in listen mode after UserUtteranceReverted
             events.append(FollowupAction(active_form_name))
+            # events.append(SlotSet("Incomplete_Story", False))
+            
+            
 
+        events.append(SlotSet("Incomplete_Story", False))
         return events
 
 
@@ -806,6 +994,7 @@ class ResetBkashTransectionVALUES(Action):
         return[
                 SlotSet("phone_number", None),
                 SlotSet("amount-of-money", None),
+                SlotSet("Incomplete_Story", True),
             ]
 class ActionValidatePhoneNumber(FormValidationAction):
 
@@ -839,19 +1028,35 @@ class ActionValidatePhoneNumber(FormValidationAction):
                 tracker.slots["phone_number"] = phone
                 if len(phone)!=11 or phone == None:
                     dispatcher.utter_message(response="utter_invalidphone")
-                    return {"phone_number": None}
+                    # return {"phone_number": None}
+                    return [
+                            SlotSet("phone_number", None),
+                            SlotSet("Incomplete_Story", True),
+                            ]
                 else:
                     print("Correct phone Number")
                     # account = db_manager.set_slot_value(tracker.sender_id, "phone_number", phone)
-                    return {"phone_number": phone}
+                    # return {"phone_number": phone}
+                    return [
+                            SlotSet("phone_number", phone),
+                            SlotSet("Incomplete_Story", True),
+                            ]
         else:
             if len(phone)!=11 or phone == None:
                 dispatcher.utter_message(response="utter_invalidphone")
-                return {"phone_number": None}
+                # return {"phone_number": None}
+                return [
+                        SlotSet("phone_number", None),
+                        SlotSet("Incomplete_Story", True),
+                        ]
             else:
                 print("Correct phone Number")
                 # account = db_manager.set_slot_value(tracker.sender_id, "phone_number", phone)
-                return {"phone_number": phone}
+                # return {"phone_number": phone}
+                return [
+                        SlotSet("phone_number", phone),
+                        SlotSet("Incomplete_Story", True),
+                        ]
 
 class ActionTellphone(Action):
 
@@ -915,7 +1120,10 @@ class AffirmOrDenyPhoneNumber(Action):
             # print(tracker.slots["phone_number"])
             # print(tracker.latest_message['intent'].get('name'))
             # return [FollowupAction('card_bill_form_c_number')]
-            return [SlotSet("phone_number", None), Form("phone_number_form")]
+            return [
+                    SlotSet("phone_number", None),
+                    Form("phone_number_form"),
+                    ]
 
 class ActionTellamount(Action):
 
@@ -973,12 +1181,17 @@ class AffirmOrDenyAmount(Action):
         if tracker.latest_message['intent'].get('name') == "affirm":
             print("Got, Yes")
             print(tracker.latest_message['intent'].get('name'))
+            return [SlotSet("Incomplete_Story", False)]
         if tracker.latest_message['intent'].get('name') == "deny":
             tracker.slots["amount-of-money"] = None
             print(tracker.slots["amount-of-money"])
             print(tracker.latest_message['intent'].get('name'))
             # return [FollowupAction('card_bill_form_c_number')]
-            return [SlotSet("amount-of-money", None), Form("card_bill_form_amount")]
+            return [
+                    SlotSet("amount-of-money", None),
+                    SlotSet("Incomplete_Story", False),
+                    Form("card_bill_form_amount"),
+                    ]
 
 class ResetPINandCARDnumer(Action):
     """action_reset_PINandCARDnumer"""
@@ -1005,6 +1218,7 @@ class ResetPINandCARDnumer(Action):
         #     ]
         return[
                 SlotSet("PIN", None),
+                SlotSet("Incomplete_Story", True),
             ]
 class ActionTellCardNumber(Action):
 
@@ -1049,7 +1263,6 @@ class ActionTellCardNumber(Action):
             dispatcher.utter_message(text=else_msg)
             return []
 
-counter=0
 class OutOfScope(Action):
     """Action_out_of_scope"""
 
@@ -1064,7 +1277,8 @@ class OutOfScope(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict]:
         """Executes the action"""
-        global counter
+        # global counter
+        counter=0
         print(tracker.latest_message['intent'].get('name'))
         print(tracker.latest_message['intent']['confidence'])
         """Executes the action"""
@@ -1134,13 +1348,16 @@ class CreditCardLimitInformation(Action):
         print(type(UserText))
         if "লিমিট" in UserText:
             dispatcher.utter_message(response="utter_card_limit")
+            return [SlotSet("Incomplete_Story", False)]
         elif "কার্ড ব্যালেন্স" in UserText or "ব্যালেন্স" in UserText or "এভেইলেবল এমাউন্ট" in UserText:
             dispatcher.utter_message(response="utter_card_balance")
+            return [SlotSet("Incomplete_Story", False)]
         elif "আউটস্টেন্ডং" in UserText or "খরচ" in UserText or "ডিউ" in UserText or "বিল" in UserText:
             dispatcher.utter_message(response="utter_card_outstanding")
+            return [SlotSet("Incomplete_Story", False)]
         else:
             dispatcher.utter_message(response="utter_card_info")
-            return []
+            return [SlotSet("Incomplete_Story", False)]
 
 class actionDateTime(Action):
     """Action_Current_DateTime"""
@@ -1250,19 +1467,35 @@ class ActionChequeNumber(FormValidationAction):
                 tracker.slots["cheque_number"] = cheque
                 if len(cheque)!=6 or cheque == None:
                     dispatcher.utter_message(response="utter_invalidCHEQUEnumber")
-                    return {"cheque_number": None}
+                    # return {"cheque_number": None}
+                    return [
+                            SlotSet("cheque_number", None),
+                            SlotSet("Incomplete_Story", True),
+                            ]
                 else:
                     print("Correct cheque Number")
                     # account = db_manager.set_slot_value(tracker.sender_id, "cheque_number", cheque)
-                    return [SlotSet("cheque_number", cheque), FollowupAction('action_tell_ChequeNumber')]
+                    return [
+                            SlotSet("cheque_number", cheque),
+                            SlotSet("Incomplete_Story", True),
+                            FollowupAction('action_tell_ChequeNumber'),
+                            ]
         else:
             if len(cheque)!=6 or cheque == None:
                 dispatcher.utter_message(response="utter_invalidCHEQUEnumber")
-                return {"cheque_number": None}
+                return [
+                        SlotSet("cheque_number", None),
+                        SlotSet("Incomplete_Story", True),
+                        ]
             else:
                 print("Correct cheque Number")
                 # account = db_manager.set_slot_value(tracker.sender_id, "cheque_number", cheque)
-                return [SlotSet("cheque_number", cheque), FollowupAction('action_tell_ChequeNumber')]
+                # return [SlotSet("cheque_number", cheque), FollowupAction('action_tell_ChequeNumber')]
+                return [
+                        SlotSet("cheque_number", cheque),
+                        SlotSet("Incomplete_Story", True),
+                        FollowupAction('action_tell_ChequeNumber'),
+                        ]
 
 class ActionTellChequeNumber(Action):
 
@@ -1340,6 +1573,7 @@ class ResetChequeANDamount(Action):
         return[
                 SlotSet("cheque_number", None),
                 SlotSet("amount-of-money", None),
+                SlotSet("Incomplete_Story", True),
             ]
 
 class ActionCard_Activation(Action):
@@ -1439,16 +1673,30 @@ class ActionGetParentsName(FormValidationAction):
         for character in Name:
             if character.isdigit():
                 dispatcher.utter_message(response="utter_invalidNAME")
-                return [SlotSet("Father_Name", None)]
+                return [
+                        SlotSet("Father_Name", None),
+                        SlotSet("Incomplete_Story", True),
+                        ]
         if Name!=None:
             if (len(Name) < 4):
                 dispatcher.utter_message(response="utter_invalidNAME")
-                return {"Father_Name": None}
+                # return {"Father_Name": None}
+                return [
+                        SlotSet("Father_Name", None),
+                        SlotSet("Incomplete_Story", True),
+                        ]
             else:
-                return [SlotSet("Father_Name", Name), FollowupAction('')]
+                return [
+                        SlotSet("Father_Name", Name),
+                        SlotSet("Incomplete_Story", True),
+                        ]
         else:
             dispatcher.utter_message(response="utter_invalidNAME")
-            return {"Father_Name": None}
+            # return {"Father_Name": None}
+            return [
+                    SlotSet("Father_Name", None),
+                    SlotSet("Incomplete_Story", True),
+                    ]
     async def validate_Mother_Name(
         self,
         slot_value: Any,
@@ -1473,16 +1721,30 @@ class ActionGetParentsName(FormValidationAction):
         for character in Name:
             if character.isdigit():
                 dispatcher.utter_message(response="utter_invalidNAME")
-                return [SlotSet("Mother_Name", None)]
+                return [
+                        SlotSet("Mother_Name", None),
+                        SlotSet("Incomplete_Story", True),
+                        ]
         if Name!=None:
             if (len(Name) < 4):
                 dispatcher.utter_message(response="utter_invalidNAME")
-                return {"Mother_Name": None}
+                # return {"Mother_Name": None}
+                return [
+                        SlotSet("Mother_Name", None),
+                        SlotSet("Incomplete_Story", True),
+                        ]
             else:
-                return [SlotSet("Mother_Name", Name), FollowupAction('')]
+                return [
+                        SlotSet("Mother_Name", Name),
+                        SlotSet("Incomplete_Story", True),
+                        ]
         else:
             dispatcher.utter_message(response="utter_invalidNAME")
-            return {"Mother_Name": None}
+            # return {"Mother_Name": None}
+            return [
+                    SlotSet("Mother_Name", None),
+                    SlotSet("Incomplete_Story", True),
+                    ]
 
 class ActionGetBirthDate(FormValidationAction):
     """validate_Birthdate_form"""
@@ -1512,10 +1774,74 @@ class ActionGetBirthDate(FormValidationAction):
         print("Name is in validate form and it is ", Bdate)
 
         if Bdate!=None:
-            return [SlotSet("Birth_Date", Bdate), FollowupAction('')]
+            return [
+                    SlotSet("Birth_Date", Bdate),
+                    SlotSet("Incomplete_Story", True),
+                    ]
         else:
             dispatcher.utter_message(response="utter_invalidBDATE")
-            return {"Birth_Date": None}
+            # return {"Birth_Date": None}
+            return [
+                    SlotSet("Birth_Date", True),
+                    SlotSet("Incomplete_Story", True),
+                    ]
+
+class ActionCardActivation(Action):
+    """action_card_activation"""
+
+    def name(self) -> Text:
+        """Unique identifier of the action"""
+        return "action_card_activation"
+
+    async def run(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+    
+        """Executes the action"""
+        dispatcher.utter_message(response="utter_card_activation")
+        return [SlotSet("Incomplete_Story", False)]
+
+class ActionOKey(Action):
+    """action_OK"""
+
+    def name(self) -> Text:
+        """Unique identifier of the action"""
+        return "action_OK"
+
+    async def run(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+    
+        """Executes the action"""
+        dispatcher.utter_message(response="utter_ok")
+        return [SlotSet("Incomplete_Story", False)]
+    
+class ActionCloseCard(Action):
+    """action_card_close_done"""
+
+    def name(self) -> Text:
+        """Unique identifier of the action"""
+        return "action_card_close_done"
+
+    async def run(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+    
+        """Executes the action"""
+        dispatcher.utter_message(response="utter_card_close_done")
+        return [SlotSet("Incomplete_Story", False)]
 
 class ActionGreet(Action):
     """action_greet"""
@@ -1549,5 +1875,5 @@ class ActionGreet(Action):
             print('Good unknown time.')
             dispatcher.utter_message(response="utter_greet")
 
-        return []
+        return [SlotSet("Incomplete_Story", False)]
 

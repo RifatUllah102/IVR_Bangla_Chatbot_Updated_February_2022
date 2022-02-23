@@ -2,12 +2,12 @@ version: "2.0"
 
 rules:
 
-- rule: Say no_story_1
-  steps:
-  - or:
-    - intent: EMI_Query
-    - intent: campaign
-  - action: utter_no_story
+# - rule: Say no_story_1
+#   steps:
+#   - or:
+#     - intent: EMI_Query
+#     - intent: campaign
+#   - action: utter_no_story
 
 - rule: BankingQuery response
   steps:
@@ -75,6 +75,18 @@ rules:
   - action: utter_explain_account_number
   - action: check_Balance_ACnum_form
   - active_loop: check_Balance_ACnum_form
+
+# - rule: other intent in the middle of account_number affirm
+#   condition:
+#   - active_loop: check_Balance_ACnum_form
+#   steps:
+#   - or:
+#     - intent: explain
+#     - intent: EMI_Query
+#     - intent: campaign
+#     - intent: weather
+#   - action: action_Other_Utter_AC_Num
+#   - action: action_Other_Utter
 
 - rule: explain parents_name
   condition:

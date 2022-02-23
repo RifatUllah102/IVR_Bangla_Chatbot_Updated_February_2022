@@ -33,6 +33,7 @@ intents:
 - Bank_and_ATM_Location
 - BankingQuery
 entities:
+- card_check
 - account_check
 - CCV
 - PIN
@@ -45,10 +46,9 @@ entities:
 - Father_Name
 - Mother_Name
 - Birth_Date
+- next_form_name
+- Incomplete_Story
 slots:
-  next_form_name:
-    type: text
-    influence_conversation: true
   Father_Name:
     type: text
     influence_conversation: false
@@ -92,6 +92,17 @@ slots:
     type: any
     initial_value: True
     influence_conversation: false
+  card_check:
+    type: any
+    initial_value: True
+    influence_conversation: false
+  Incomplete_Story:
+    type: any
+    initial_value: False
+    influence_conversation: false
+  next_form_name:
+    type: text
+    influence_conversation: false
 responses:
   utter_thanks:
   - text: আপনাকেও ধন্যবাদ
@@ -111,11 +122,13 @@ responses:
   - text: ঠিক আছে।
   utter_ask_continue:
   - text: আপনি কি প্রক্রিয়াটি চলমান করতে চান?
+  utter_ask_continue_form:
+  - text: আপনি কি বর্তমান কাজটি কনটিনিউ করতে চান?
   utter_default:
   - text: আমি আপনার বার্তা টা বুঝতে পারি নি। আপনি কি অন্যভাবে বলতে পারবেন প্লিজ?
   - text: কথাটি বুঝতে পারিনি। দয়া করে পুনরায় বলুন
   - text: দুঃখিত আপনার কথাটি শুনতে পাইনি
-  - text: দুঃখিত পুনরাই বলবেন প্লিজ?
+  - text: দুঃখিত পুনরায় বলবেন প্লিজ?
   utter_AT:
   - text: আপনার কল টি এক জন কাস্টমার কেয়ার প্রতিনিধির কাছে ট্রান্সফার করা হচ্ছে
   utter_greet:
@@ -178,7 +191,7 @@ responses:
   utter_Out_of_scope_funny_10:
   - text: আমি কোনো বিজ্ঞানী না, তাই আমি সঠিক জানি না
   - text: এলিয়েন, সেটা আবার কি।
-  - text: আমি জানি না, এবং বিজ্ঞানীরা ও নিশ্চিত করে বলতে পারবে না।
+  - text: আমি জানি না, বিজ্ঞানীরা নিশ্চিত করে বলতে পারবে।
   utter_Out_of_scope_funny_Alexa:
   - text: অ্যামাজন অ্যালেক্সা, একটি ভার্চুয়াল সহকারী প্রযুক্তি যা মূলত আইভোনা নামে একটি পোলিশ স্পিচ সিন্থেসাইজারের উপর তৈরি। যা অ্যামাজন কিনে নিয়েছে।
   utter_Out_of_scope_funny_Siri:
@@ -277,7 +290,7 @@ responses:
   - text: আপনার কার্ড এর এভেইলেবল এমাউন্ট হচ্ছে নব্বই হাজার টাকা।
   utter_card_info:
   - text: আপনার কার্ড এর লিমিট হচ্ছে এক লক্ষ বিশ হাজার টাকা, এবং আপনার কার্ড এর এভেইলেবল এমাউন্ট হচ্ছে নব্বই হাজার টাকা।
-  utter_weather:
+  utter_weather_query:
   - text: আজকের ওয়েদার, মেঘ মুক্ত মাটি, কাঁদা মুক্ত আকাশ, খুবই চমৎকার ওয়েদার।
   utter_explain:
   - text: এই কাজটি সম্পন্ন করতে আপনার এই তথ্য আমাদের লাগবেই। চিন্তা করবেন না, আপনার তথ্য আমাদের কাছে নিরাপদ থাকবে।
@@ -316,14 +329,19 @@ responses:
   utter_no_story:
   - text: দুঃখিত। আমি এই রিলেটেড কথা বলতে পারছি না, কারণ আমার কাছে এর কোন স্টোরি নেই।
 actions:
-- action_switch_forms_deny
-- action_switch_forms_ask
+- action_Other_Utter
+- action_Other_Utter_AC_Num
+- action_weather
 - action_reset_all_slots
 - Action_Card_limit_info
 - Action_Current_DateTime
 - Action_out_of_scope
 - action_check_Cheque_Number
 - action_check_AC_Number
+- action_check_AC_Number_Bkash
+- action_card_activation
+- action_OK
+- action_card_close_done
 - action_check_PIN
 - action_check_amount
 - action_check_phone_Number
@@ -339,6 +357,8 @@ actions:
 - action_reset_PINandCARDnumer
 - action_reset_card_number
 - action_show_balance
+- action_switch_forms_ask
+- action_switch_forms_deny
 - action_tell_ACNumber
 - action_tell_Amount
 - action_tell_ChequeNumber
@@ -384,6 +404,7 @@ actions:
 - utter_explain_account_number
 - utter_explain_card_number
 - utter_explain_pin
+- utter_weather_query
 - utter_goodbye
 - utter_greet
 - utter_card_activation
@@ -398,9 +419,10 @@ actions:
 - utter_invalidBDATE
 - utter_thanks
 - utter_transfer
-- utter_weather
 - utter_no_story
 - utter_bank_location
+- utter_ask_continue_form
+- utter_ask_continue
 - utter_cheque_cancel_confirmed
 - validate_card_bill_form
 - validate_card_bill_form_amount
